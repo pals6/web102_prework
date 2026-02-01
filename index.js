@@ -10,6 +10,7 @@ import GAMES_DATA from './games.js';
 // create a list of objects to store the data about the games using JSON.parse
 const GAMES_JSON = JSON.parse(GAMES_DATA)
 
+
 // remove all child elements from a parent element in the DOM
 function deleteChildElements(parent) {
     while (parent.firstChild) {
@@ -44,8 +45,26 @@ function addGamesToPage(games) {
 
 
         // append the game to the games-container
+        for (let i = 0; i < games.length; i++) {
+    const game = games[i];
+
+    const gameCard = document.createElement("div");
+    gameCard.classList.add("game-card");
+
+    gameCard.innerHTML = `
+      <img class="game-img" src="${game.img}" alt="${game.name}" />
+      <h3>${game.name}</h3>
+      <p>${game.description}</p>
+      <p><strong>Pledged:</strong> $${game.pledged.toLocaleString()}</p>
+      <p><strong>Goal:</strong> $${game.goal.toLocaleString()}</p>
+    `;
+
+
+    gamesContainer.appendChild(gameCard);
+  }
 
 }
+addGamesToPage(GAMES_JSON);
 
 // call the function we just defined using the correct variable
 // later, we'll call this function using a different list of games
@@ -61,21 +80,36 @@ function addGamesToPage(games) {
 const contributionsCard = document.getElementById("num-contributions");
 
 // use reduce() to count the number of total contributions by summing the backers
-
+const totalContributions = GAMES_JSON.reduce(
+  (acc, game) => acc + game.backers,
+  0
+);
 
 // set the inner HTML using a template literal and toLocaleString to get a number with commas
+contributionsCard.innerHTML = `
+  ${totalContributions.toLocaleString()}
+`;
 
 
 // grab the amount raised card, then use reduce() to find the total amount raised
 const raisedCard = document.getElementById("total-raised");
 
 // set inner HTML using template literal
+const totalRaised = GAMES_JSON.reduce(
+  (acc, game) => acc + game.pledged,
+  0
+);
 
+raisedCard.innerHTML = `
+  $${totalRaised.toLocaleString()}
+`;
 
 // grab number of games card and set its inner HTML
 const gamesCard = document.getElementById("num-games");
 
-
+gamesCard.innerHTML = `
+  ${GAMES_JSON.length}
+`;
 /*************************************************************************************
  * Challenge 5: Add functions to filter the funded and unfunded games
  * total number of contributions, amount donated, and number of games on the site.
@@ -87,6 +121,14 @@ function filterUnfundedOnly() {
     deleteChildElements(gamesContainer);
 
     // use filter() to get a list of games that have not yet met their goal
+    const unfundedGames = GAMES_JSON.filter((game) => game.pledged < game.goal);
+    addGamesToPage(unfundedGames);
+
+    // (optional) helps you get Secret Key component 1
+    console.log("unfunded:", unfundedGames.length);
+
+    return unfundedGames;
+
 
 
     // use the function we previously created to add the unfunded games to the DOM
@@ -101,6 +143,14 @@ function filterFundedOnly() {
 
 
     // use the function we previously created to add unfunded games to the DOM
+    const fundedGames = GAMES_JSON.filter((game) => game.pledged >= game.goal);
+
+  addGamesToPage(fundedGames);
+
+  // (optional) helps you get Secret Key component 2
+  console.log("funded:", fundedGames.length);
+
+  return fundedGames;
 
 }
 
@@ -109,6 +159,8 @@ function showAllGames() {
     deleteChildElements(gamesContainer);
 
     // add all games from the JSON data to the DOM
+    deleteChildElements(gamesContainer);
+  addGamesToPage(GAMES_JSON);
 
 }
 
@@ -118,7 +170,9 @@ const fundedBtn = document.getElementById("funded-btn");
 const allBtn = document.getElementById("all-btn");
 
 // add event listeners with the correct functions to each button
-
+unfundedBtn.addEventListener("click", filterUnfundedOnly);
+fundedBtn.addEventListener("click", filterFundedOnly);
+allBtn.addEventListener("click", showAllGames);
 
 /*************************************************************************************
  * Challenge 6: Add more information at the top of the page about the company.
@@ -147,6 +201,8 @@ const secondGameContainer = document.getElementById("second-game");
 const sortedGames =  GAMES_JSON.sort( (item1, item2) => {
     return item2.pledged - item1.pledged;
 });
+console.log(sortedGames[0].name, sortedGames[1].name);
+
 
 // use destructuring and the spread operator to grab the first and second games
 
