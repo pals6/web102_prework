@@ -21,6 +21,7 @@ The following **optional** features are implemented:
 
 * [ ] Additional styling and layout improvements
 * [ ] Search or navigation enhancements (future improvement)
+* [ ] Add navigation links to quickly jump between sections
 
 ## Video Walkthrough
 

@@ -28,24 +28,7 @@ const gamesContainer = document.getElementById("games-container");
 
 // create a function that adds all data from the games array to the page
 function addGamesToPage(games) {
-
-    // loop over each item in the data
-
-
-        // create a new div element, which will become the game card
-
-
-        // add the class game-card to the list
-
-
-        // set the inner HTML using a template literal to display some info 
-        // about each game
-        // TIP: if your images are not displaying, make sure there is space
-        // between the end of the src attribute and the end of the tag ("/>")
-
-
-        // append the game to the games-container
-        for (let i = 0; i < games.length; i++) {
+  for (let i = 0; i < games.length; i++) {
     const game = games[i];
 
     const gameCard = document.createElement("div");
@@ -59,11 +42,10 @@ function addGamesToPage(games) {
       <p><strong>Goal:</strong> $${game.goal.toLocaleString()}</p>
     `;
 
-
     gamesContainer.appendChild(gameCard);
   }
-
 }
+
 addGamesToPage(GAMES_JSON);
 
 // call the function we just defined using the correct variable
@@ -159,7 +141,6 @@ function showAllGames() {
     deleteChildElements(gamesContainer);
 
     // add all games from the JSON data to the DOM
-    deleteChildElements(gamesContainer);
   addGamesToPage(GAMES_JSON);
 
 }
@@ -189,6 +170,18 @@ const descriptionContainer = document.getElementById("description-container");
 
 
 // create a new DOM element containing the template string and append it to the description container
+const unfundedCount = GAMES_JSON.filter(
+  (game) => game.pledged < game.goal
+).length;
+
+const displayStr = `
+  A total of $${totalRaised.toLocaleString()} has been raised for ${GAMES_JSON.length} games.
+  Currently, ${unfundedCount} game${unfundedCount === 1 ? "" : "s"} remain unfunded.
+`;
+
+const p = document.createElement("p");
+p.innerHTML = displayStr;
+descriptionContainer.appendChild(p);
 
 /************************************************************************************
  * Challenge 7: Select & display the top 2 games
@@ -202,6 +195,16 @@ const sortedGames =  GAMES_JSON.sort( (item1, item2) => {
     return item2.pledged - item1.pledged;
 });
 console.log(sortedGames[0].name, sortedGames[1].name);
+const [topGame, runnerUp, ...rest] = sortedGames;
+
+const topGameEl = document.createElement("p");
+topGameEl.innerHTML = topGame.name;
+firstGameContainer.appendChild(topGameEl);
+
+const runnerUpEl = document.createElement("p");
+runnerUpEl.innerHTML = runnerUp.name;
+secondGameContainer.appendChild(runnerUpEl);
+
 
 
 // use destructuring and the spread operator to grab the first and second games
