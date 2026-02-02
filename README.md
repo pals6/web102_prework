@@ -27,7 +27,7 @@ The following **optional** features are implemented:
 
 Here's a walkthrough of the implemented features:
 
-<img src="https://github.com/user-attachments/assets/d65ce102-94fb-4c83-b813-6d5bbef02949" title="Video Walkthrough" alt="Video Walkthrough" />
+<img src="https://www.loom.com/share/68bb72a43d0742fb9ebea92170a1e1bc" title="Video Walkthrough" alt="Video Walkthrough" />
 
 ## Notes
 
