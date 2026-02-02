@@ -27,7 +27,7 @@ The following **optional** features are implemented:
 
 Here's a walkthrough of the implemented features:
 
-<img src="https://github.com/user-attachments/assets/6fafe7f8-be9d-420c-b254-1bef8ce53232" title="Video Walkthrough" alt="Video Walkthrough" />
+<img src="https://github.com/user-attachments/assets/d65ce102-94fb-4c83-b813-6d5bbef02949" title="Video Walkthrough" alt="Video Walkthrough" />
 
 ## Notes
 
